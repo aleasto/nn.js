@@ -1,6 +1,6 @@
 # nn.js
 
-> ${DESCRIPTION}
+> A simple feed-forward Neural Network implementation in ES6 JavaScript 
 
 [![NPM Version][npm-image]][npm-url]
 
@@ -68,5 +68,5 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-[npm-image]: https://img.shields.io/npm/v/live-xxx.svg
-[npm-url]: https://npmjs.org/package/live-xxx
+[npm-image]: https://img.shields.io/npm/v/nn.js.svg
+[npm-url]: https://npmjs.org/package/nn,js
