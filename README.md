@@ -13,7 +13,7 @@ npm install nn.js
 ## Usage
 ```javascript
 // Import the NeuralNetwork class
-const NeuralNetwork = require("./nn.js");
+const NeuralNetwork = require("nn.js");
 
 
 // Create a new Neural Network.
