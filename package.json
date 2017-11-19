@@ -1,0 +1,23 @@
+{
+  "name": "nn.js",
+  "version": "1.0.0",
+  "description": "A simple Neural Network implementation in ES6 JavaScript",
+  "main": "nn.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YoDevil/nn.js.git"
+  },
+  "keywords": [
+    "neuralnetwork",
+    "feed-forward"
+  ],
+  "author": "Alessandro Astone",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YoDevil/nn.js/issues"
+  },
+  "homepage": "https://github.com/YoDevil/nn.js#readme"
+}
