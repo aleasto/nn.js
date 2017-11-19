@@ -69,4 +69,4 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
 [npm-image]: https://img.shields.io/npm/v/nn.js.svg
-[npm-url]: https://npmjs.org/package/nn,js
+[npm-url]: https://npmjs.org/package/nn.js
