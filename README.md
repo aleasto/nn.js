@@ -50,11 +50,12 @@ nn.trainAsync(inputs, targets, 0.01, null, 0.05)
 // You can stop the async training at any point by calling
 nn.stopTraining();
 
-// Store the weights values on file
-nn.print("./filename.txt");
+// Save the current weight and bias values
+let data = nn.save();
+JSON.stringify(data);
 
-// Or load it
-nn.load(".filename.txt");
+// Or load them
+nn.load(data);
 
 // K.I.S.S!
 ```
