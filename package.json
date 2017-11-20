@@ -1,6 +1,6 @@
 {
   "name": "nn.js",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A simple feed-forward Neural Network implementation in ES6 JavaScript",
   "main": "nn.js",
   "scripts": {
