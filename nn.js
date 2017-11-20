@@ -114,12 +114,20 @@ class NeuralNetwork {
      * @param {Number[][]} targets - Batch of target values
      * @param {Number} learnRate - Small positive number that defines how quickly to train
      * @param {Number} [epochs = Infinity] - Number of iterations of the whole training set
-     * @param {Number} [minMSE = 0] - Minimum value of MeanSquaredError on training data
+     * @param {Number} [minMSE = -1] - Minimum value of MeanSquaredError on training data
      */
-    train(inputs, targets, learnRate, epochs = 0, minMSE = Infinity){
+    train(inputs, targets, learnRate, epochs, minMSE){
+        if(!epochs && !minMSE)
+                throw "At least one valid finish condition must be specified";
+
         if(inputs.length != targets.length){
             throw "Inputs should be as many as targets";
         }
+        
+        if(!epochs)
+            epochs = Infinity;
+        if(!minMSE)
+            minMSE = -1;
 
         let i=0;
         do{
@@ -129,7 +137,7 @@ class NeuralNetwork {
             }
             i++;
         }
-        while(i<epochs || this.mse(inputs[0], targets[0]) > minMSE);
+        while(i<epochs && this.mse(inputs[0], targets[0]) > minMSE );
     }
 
     /**
@@ -138,12 +146,19 @@ class NeuralNetwork {
      * @param {Number[][]} targets - Batch of target values
      * @param {Number} learnRate - Small positive number that defines how quickly to train
      * @param {Number} [epochs = Infinity] - Number of iterations of the whole training set
-     * @param {Number} [minMSE = 0] - Minimum value of MeanSquaredError on training data
+     * @param {Number} [minMSE = -1] - Minimum value of MeanSquaredError on training data
+     * @param {function(Number,Number)} callback - Callback function to be called when the async training is over. 
+     *  Passes as arguments the number of iterations completed, and the MSE on training data after the training.
      */
-    async trainAsync(inputs, targets, learnRate, epochs = Infinity, minMSE = 0){
+    async trainAsync(inputs, targets, learnRate, epochs, minMSE, callback){
         if(inputs.length != targets.length){
             throw "Inputs should be as many as targets";
         }
+
+        if(!epochs)
+            epochs = Infinity;
+        if(!minMSE)
+            minMSE = -1;
 
         let i=0;
         do{
@@ -153,7 +168,10 @@ class NeuralNetwork {
             }
             i++;
         }
-        while(i<epochs || this.mse(inputs[0], targets[0]) > minMSE);
+        while(i<epochs && this.mse(inputs[0], targets[0]) > minMSE );
+
+        if(callback)
+            callback(i, this.mse(inputs[0], targets[0]));
     }
 
     print(filename){

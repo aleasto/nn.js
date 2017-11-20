@@ -15,7 +15,6 @@ npm install nn.js
 // Import the NeuralNetwork class
 const NeuralNetwork = require("nn.js");
 
-
 // Create a new Neural Network.
 
 // The first 3+ arguments are the number of neurons for each layer. 
@@ -23,7 +22,6 @@ const NeuralNetwork = require("nn.js");
 
 // The last argument specifies which activation function to use.
 //  Currently supports "logistic", "tanh", "relu".
-
 let nn = new NeuralNetwork(10,7,5,2,"relu");
 
 // Set up your input and target data as a batch of arrays
@@ -36,16 +34,28 @@ let targets = [
     [1,0]                   // Second target**
 ];
 
+// Feed the network with an input, returns the output
+console.log("Result: " + nn.eval(inputs[0]));
+
 // Call the train function, passing:
 //  inputs, targets, learning rate, (optional) number of epochs, (optional) minimum MSE before stopping
+//  The number of epochs HAS PRIORITY on the conditions. Meaning that if you specify both, it will only run for specified epochs.
 nn.train(inputs, targets, 0.01, 40, 0.05);
 
+//  This instead will truly run until MSE < 0.05
+nn.train(inputs, targets, 0.01, null, 0.05)
+
 // You can also call the trainAsync function, to have it train asynchronously
+//  It accepts a callback function as the last parameter, to be called when training is over.
+//  The callback passes as argument the number of iterations run, and the MSE on training data
+nn.trainAsync(inputs, targets, 0.01, null, 0.05, function(epochs, mse){ /* finished training */ })
+
+// You can also use async/await keyworks
 (async function(){
     await nn.trainAsync(inputs, targets, 0.01, 40, 0.05);
-    // Call the eval function, to see what the outputs are for a given input
-    console.log("Result: " + nn.eval(inputs[0]));
+    console.log("Training finished");
 })();
+
 
 // Store the weights values on file
 nn.print("./filename.txt");
