@@ -46,16 +46,9 @@ nn.train(inputs, targets, 0.01, 40, 0.05);
 nn.train(inputs, targets, 0.01, null, 0.05)
 
 // You can also call the trainAsync function, to have it train asynchronously
-//  It accepts a callback function as the last parameter, to be called when training is over.
-//  The callback passes as argument the number of iterations run, and the MSE on training data
-nn.trainAsync(inputs, targets, 0.01, null, 0.05, function(epochs, mse){ /* finished training */ })
-
-// You can also use async/await keyworks
-(async function(){
-    await nn.trainAsync(inputs, targets, 0.01, 40, 0.05);
-    console.log("Training finished");
-})();
-
+nn.trainAsync(inputs, targets, 0.01, null, 0.05)
+// You can stop the async training at any point by calling
+nn.stopTraining();
 
 // Store the weights values on file
 nn.print("./filename.txt");

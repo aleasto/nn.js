@@ -147,10 +147,8 @@ class NeuralNetwork {
      * @param {Number} learnRate - Small positive number that defines how quickly to train
      * @param {Number} [epochs = Infinity] - Number of iterations of the whole training set
      * @param {Number} [minMSE = -1] - Minimum value of MeanSquaredError on training data
-     * @param {function(Number,Number)} callback - Callback function to be called when the async training is over. 
-     *  Passes as arguments the number of iterations completed, and the MSE on training data after the training.
      */
-    async trainAsync(inputs, targets, learnRate, epochs, minMSE, callback){
+    async trainAsync(inputs, targets, learnRate, epochs, minMSE){
         if(inputs.length != targets.length){
             throw "Inputs should be as many as targets";
         }
@@ -160,18 +158,21 @@ class NeuralNetwork {
         if(!minMSE)
             minMSE = -1;
 
+        this.stop = false;
         let i=0;
         do{
             for(let j=0; j<inputs.length; j++){
-                await this.eval(inputs[j]);
-                await this.backprop(targets[j], learnRate);
+                this.eval(inputs[j]);
+                this.backprop(targets[j], learnRate);
             }
+            await new Promise(resolve => setImmediate(resolve));
             i++;
         }
-        while(i<epochs && this.mse(inputs[0], targets[0]) > minMSE );
+        while(!this.stop && i<epochs && this.mse(inputs[0], targets[0]) > minMSE );
+    }
 
-        if(callback)
-            callback(i, this.mse(inputs[0], targets[0]));
+    stopTraining(){
+        this.stop = true;
     }
 
     print(filename){
