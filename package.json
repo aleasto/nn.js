@@ -1,7 +1,7 @@
 {
   "name": "nn.js",
   "version": "1.0.2",
-  "description": "A simple Neural Network implementation in ES6 JavaScript",
+  "description": "A simple feed-forward Neural Network implementation in ES6 JavaScript",
   "main": "nn.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

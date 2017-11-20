@@ -155,6 +155,63 @@ class NeuralNetwork {
         }
         while(i<epochs || this.mse(inputs[0], targets[0]) > minMSE);
     }
+
+    print(filename){
+        let fs = require('fs');
+        let data = new Array(this.hiddenLayers.length+1);
+        let i=0;
+        for(; i<data.length; i++)
+            data[i] = { "weights" : [], "biases" : [] }
+
+        for(i=0; i<this.hiddenLayers.length; i++){
+            data[i].weights = this.hiddenLayers[i].weights;
+            data[i].biases = this.hiddenLayers[i].biases;
+        }
+        data[i].weights = this.outputLayer.weights;
+        data[i].biases = this.outputLayer.biases;
+
+        try{
+            fs.writeFileSync(filename, JSON.stringify(data), "utf8");
+        }
+        catch (err){
+            throw "Error while saving file: " + err;
+        }
+    }
+
+    load(filename){
+        try{
+            let fs = require('fs');
+            let json =fs.readFileSync(filename, "utf8");
+            let data = JSON.parse(json);
+            // Check the number of layers
+            if(data.length != this.hiddenLayers.length+1)
+                throw "JSON data does not match this Neural Network size";
+            
+            // Check each matrix size
+            let i=0;
+            for(; i<this.hiddenLayers.length; i++){
+                if(this.hiddenLayers[i].weights.length != data[i].weights.length || 
+                    this.hiddenLayers[i].weights[0].length != data[i].weights[0].length ||
+                    this.hiddenLayers[i].biases.length != data[i].biases.length)
+                    throw "JSON data does not match this Neural Network size";
+            }
+            if(this.outputLayer.weights.length != data[i].weights.length ||
+                this.outputLayer.weights[0].length != data[i].weights[0].length ||
+                this.outputLayer.biases.length != data[i].biases.length)
+                throw "JSON data does not match this Neural Network size";
+
+            // All good, procede.
+            for(i=0; i<this.hiddenLayers.length; i++){
+                this.hiddenLayers[i].loadWeights(data[i].weights);
+                this.hiddenLayers[i].loadBiases(data[i].biases);
+            }
+            this.outputLayer.loadWeights(data[i].weights);
+            this.outputLayer.loadBiases(data[i].biases);
+        }
+        catch (err){
+            throw "Error while reading file: " + err;
+        }
+    }
 }
 
 class Layer {
@@ -224,6 +281,14 @@ class Layer {
         /* Chain */
         if(this.prev.deltas)
             this.prev.back(learnRate, derivative);
+    }
+
+    loadWeights(data){
+        this.weights = data;
+    }
+
+    loadBiases(data){
+        this.biases = data;
     }
 }
 

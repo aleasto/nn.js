@@ -28,12 +28,12 @@ let nn = new NeuralNetwork(10,7,5,2,"relu");
 
 // Set up your input and target data as a batch of arrays
 let inputs = [
-    [0,0,0,0,0,1,1,1,1,1],
-    [1,1,1,1,1,0,0,0,0,0]
+    [0,0,0,0,0,1,1,1,1,1],  // First input*
+    [1,1,1,1,1,0,0,0,0,0]   // Second input**
 ];
 let targets = [
-    [0,1],
-    [1,0]
+    [0,1],                  // First target*
+    [1,0]                   // Second target**
 ];
 
 // Call the train function, passing:
@@ -47,6 +47,13 @@ nn.train(inputs, targets, 0.01, 40, 0.05);
     console.log("Result: " + nn.eval(inputs[0]));
 })();
 
+// Store the weights values on file
+nn.print("./filename.txt");
+
+// Or load it
+nn.load(".filename.txt");
+
+// K.I.S.S!
 ```
 
 ## License
