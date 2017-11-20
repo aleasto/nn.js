@@ -116,7 +116,7 @@ class NeuralNetwork {
      * @param {Number} [epochs = Infinity] - Number of iterations of the whole training set
      * @param {Number} [minMSE = 0] - Minimum value of MeanSquaredError on training data
      */
-    train(inputs, targets, learnRate, epochs = Infinity, minMSE = 0){
+    train(inputs, targets, learnRate, epochs = Infinity, minMSE = Infinity){
         if(inputs.length != targets.length){
             throw "Inputs should be as many as targets";
         }
