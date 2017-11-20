@@ -238,7 +238,7 @@ class Layer {
 
     initBiases(){
         for(let i=0; i<this.biases.length; i++){
-            this.biases[i] = 0.0;
+            this.biases[i] = 0.1;
         }
     }
 
